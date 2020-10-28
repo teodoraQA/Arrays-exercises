@@ -1,0 +1,34 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class SortArr {
+    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        String[] input = scanner.nextLine().split(" ");
+//        Arrays.sort(input);
+//
+//        System.out.println(String.join(" ", input));
+//        }
+//        too easy
+        Scanner scanner = new Scanner(System.in);
+        String[] input = scanner.nextLine().split(" ");
+        int[] sortArr = new int[input.length];
+        for (int i = 0; i < sortArr.length ; i++) {
+            sortArr[i]= Integer.parseInt(input[i]);
+        }
+        for (int i = 0; i < sortArr.length; i++) {
+            for (int j = i+1; j < sortArr.length; j++) {
+                int buffer = sortArr[i];
+                if (sortArr[i] > sortArr[j]) {
+                    sortArr[i] = sortArr[j];
+                    sortArr[j] = buffer;
+                }
+            }
+        }
+            for (int n: sortArr) {
+                System.out.print(n + " ");
+            }
+
+    }
+}
+
