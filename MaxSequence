@@ -1,35 +1,42 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MaxSequence {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String[] arr= scanner.nextLine().split(" ");
-        int[] input = new int[arr.length];
-        for (int i = 0; i < input.length; i++) {
-            input[i] = Integer.parseInt(arr[i]);
-        }// ot string v chislen masiv
+        int[] inputNums = readArrNums(scanner);
+        String maxSeqNums = findMaxSequenceNumbers(inputNums);
+        System.out.println(maxSeqNums);
+    }
 
+    private static int[] readArrNums(Scanner scanner) {
+        String[] arr = scanner.nextLine().split("\\s+");
+        int[] input = Arrays.stream(arr)
+                .mapToInt(Integer::parseInt).toArray();
+        return input;
+    }
+
+    private static String findMaxSequenceNumbers(int[] input) {
         String sequenceMaxElements = "";
         int maxCounterSeq = 1;
 
-        for (int i = 0; i < input.length-1; i++) {// indeksirane na start element
-
-            String currentSequence= input[i]+" ";
-            int currentCountSeq=1;
-//            vkl vtori cikul koito da tursi posledovatelni chisla
-            for (int j = i+1; j < input.length; j++) {
-                if(input[j]== input[i]+currentCountSeq){
-                    currentSequence+= input[j]+" ";
+        for (int i = 0; i < input.length - 1; i++) {
+            String currentSequence = input[i] + " ";
+            int currentCountSeq = 1;
+            for (int j = i + 1; j < input.length; j++) {
+                if (input[j] == input[i] + currentCountSeq) {
+                    currentSequence += input[j] + " ";
                     currentCountSeq++;
-                } else
+                } else {
                     break;
+                }
             }
-
-            if(currentCountSeq> maxCounterSeq){
-                maxCounterSeq= currentCountSeq;
-                sequenceMaxElements= currentSequence;
+            if (currentCountSeq > maxCounterSeq) {
+                maxCounterSeq = currentCountSeq;
+                sequenceMaxElements = currentSequence;
             }
         }
-        System.out.println(sequenceMaxElements);
+        return sequenceMaxElements;
     }
+
 }
