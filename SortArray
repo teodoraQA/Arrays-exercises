@@ -13,27 +13,38 @@ public class SortArr {
 
         Scanner scanner = new Scanner(System.in);
         int[] inputNums = readArrNums(scanner);
-        sortArray(inputNums);
+        if(inputNums.length == 0){
+            System.out.println("Array is empty");
+        } else {
+            sortArray(inputNums);
+        }
         printArray(inputNums);
     }
 
     private static int[] readArrNums(Scanner scanner) {
         String[] arr = scanner.nextLine().split("\\s+");
-        int[] input = Arrays.stream(arr)
+        if (arr.length != 0){
+            int[] input = Arrays.stream(arr)
                 .mapToInt(Integer::parseInt).toArray();
-        return input;
+            return input;
+        } else {
+            int[] input = new int[0];
+            return input ;
+        }
     }
 
     public static void sortArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > arr[j]) {
-                    int buffer = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = buffer;
+        if(arr.length > 1){    
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = i + 1; j < arr.length; j++) {
+                    if (arr[i] > arr[j]) {
+                        int buffer = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = buffer;
+                    }
                 }
             }
-        }
+        } 
     }
 
     public static void printArray(int[] inputNums) {
