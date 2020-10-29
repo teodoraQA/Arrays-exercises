@@ -9,26 +9,37 @@ public class SortArr {
 //
 //        System.out.println(String.join(" ", input));
 //        }
-//        too easy
+
+
         Scanner scanner = new Scanner(System.in);
-        String[] input = scanner.nextLine().split(" ");
-        int[] sortArr = new int[input.length];
-        for (int i = 0; i < sortArr.length ; i++) {
-            sortArr[i]= Integer.parseInt(input[i]);
-        }
-        for (int i = 0; i < sortArr.length; i++) {
-            for (int j = i+1; j < sortArr.length; j++) {
-                int buffer = sortArr[i];
-                if (sortArr[i] > sortArr[j]) {
-                    sortArr[i] = sortArr[j];
-                    sortArr[j] = buffer;
+        int[] inputNums = readArrNums(scanner);
+        sortArray(inputNums);
+        printArray(inputNums);
+    }
+
+    private static int[] readArrNums(Scanner scanner) {
+        String[] arr = scanner.nextLine().split("\\s+");
+        int[] input = Arrays.stream(arr)
+                .mapToInt(Integer::parseInt).toArray();
+        return input;
+    }
+
+    public static void sortArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    int buffer = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = buffer;
                 }
             }
         }
-            for (int n: sortArr) {
-                System.out.print(n + " ");
-            }
-
     }
-}
 
+    public static void printArray(int[] inputNums) {
+        for (int n : inputNums) {
+            System.out.print(n + " ");
+        }
+    }
+
+}
