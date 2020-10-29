@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class MaxSequence {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter sequence of numbers separated by space: ");
         int[] inputNums = readArrNums(scanner);
         String maxSeqNums = findMaxSequenceNumbers(inputNums);
         System.out.println(maxSeqNums);
@@ -24,12 +25,11 @@ public class MaxSequence {
             String currentSequence = input[i] + " ";
             int currentCountSeq = 1;
             for (int j = i + 1; j < input.length; j++) {
-                if (input[j] == input[i] + currentCountSeq) {
-                    currentSequence += input[j] + " ";
-                    currentCountSeq++;
-                } else {
+                if (input[j] != input[i] + currentCountSeq) {
                     break;
                 }
+                currentSequence += input[j] + " ";
+                currentCountSeq++;
             }
             if (currentCountSeq > maxCounterSeq) {
                 maxCounterSeq = currentCountSeq;
