@@ -1,0 +1,41 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class ArrNumsRotations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter sequence of numbers separated by space: ");
+        int[] numSeq = readArrNums(scanner);
+        System.out.print("Enter the number of positions rotate: ");
+        int positionsToMove = Integer.parseInt(scanner.nextLine());
+        rotateArrByGivenPositions(numSeq, positionsToMove);
+        printArray(numSeq);
+    }
+
+    public static void rotateArrByGivenPositions(int[] numSeq, int positionsToMove) {
+        for (int j = 1; j <= positionsToMove % numSeq.length; j++) {
+            int buffer= numSeq[numSeq.length-1];
+            rotateArr(numSeq);
+            numSeq[0] = buffer;
+        }
+    }
+
+    public static void rotateArr(int[] numSeq) {
+        for (int i = numSeq.length - 1; i >= 1; i--) {
+            numSeq[i] = numSeq[i - 1];
+        }
+    }
+
+    private static int[] readArrNums(Scanner scanner) {
+        String[] arr = scanner.nextLine().split("\\s+");
+        int[] input = Arrays.stream(arr)
+                .mapToInt(Integer::parseInt).toArray();
+        return input;
+    }
+
+    public static void printArray(int[] arrNums) {
+        for (int num : arrNums) {
+            System.out.print(num + " ");
+        }
+    }
+}
