@@ -1,0 +1,90 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class SearchNumInArr {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] inputNums = readArrNums(scanner);
+        int inputNumsLength = inputNums.length;
+        sortArray(inputNums);
+        int numToFind = Integer.parseInt(scanner.nextLine());
+        int middleIndex = inputNumsLength / 2;
+        boolean numberIsContained = false;
+
+        if (inputNums[middleIndex] == numToFind) {
+            numberIsContained = true;
+        } else if (inputNums[middleIndex] > numToFind) {
+            numberIsContained = searchLeftHalf(inputNums, middleIndex, numToFind);
+        } else {
+            numberIsContained = searchRightHalf(inputNums, middleIndex, numToFind);
+        }
+
+        if (numberIsContained) {
+            System.out.println(String.format("Array contains the number %d", numToFind));
+        } else {
+            System.out.println(String.format("Array does not contains the number %d", numToFind));
+        }
+    }
+
+    private static boolean searchRightHalf(int[] arr, int middleIndex, int num) {
+        boolean isFound = false;
+        int tempArrLength = arr.length - (middleIndex + 1);
+        int[] tempArr = new int[tempArrLength];
+        middleIndex++;
+        for (int i = 0; i < tempArrLength; i++) {
+            tempArr[i] = arr[middleIndex];
+            middleIndex++;
+        }// right arr creation
+        middleIndex = tempArrLength / 2;
+        if (tempArr[middleIndex] == num) {
+            isFound = true;
+        } else if (tempArr[middleIndex] > num) {
+            isFound = searchLeftHalf(tempArr, middleIndex, num);
+        } else {
+            isFound = searchRightHalf(tempArr, middleIndex, num);
+        }
+        return isFound;
+    }
+
+    private static boolean searchLeftHalf(int[] arr, int middleIndex, int num) {
+        boolean isFound = false;
+        int tempArrLength = arr.length - (middleIndex);
+        int[] tempArr = new int[tempArrLength];
+        middleIndex = 0;
+        for (int i = 0; i < tempArrLength; i++) {
+            tempArr[i] = arr[middleIndex];
+            middleIndex++;
+        }// left arr creation
+        while (!isFound) {
+            middleIndex /= 2;
+            if (arr[middleIndex] == num) {
+                isFound = true;
+            } else if (arr[middleIndex] < num) {
+                isFound = searchRightHalf(tempArr, middleIndex, num);
+            } else {
+                isFound = searchLeftHalf(tempArr, middleIndex, num);
+            }
+        }
+        return isFound;
+    }
+
+    private static int[] readArrNums(Scanner scanner) {
+        String[] arr = scanner.nextLine().split("\\s+");
+        int[] input = Arrays.stream(arr)
+                .mapToInt(Integer::parseInt).toArray();
+        return input;
+    }
+
+    public static void sortArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    int buffer = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = buffer;
+                }
+            }
+        }
+    }
+}
